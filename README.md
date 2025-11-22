@@ -1,5 +1,7 @@
 # mobile-client-strategy
 
+Part of the secondbase kit – a reusable, always-modern company-in-a-box.
+
 React Native + Expo + TypeScript **mobile app** for the _End to End Company Products_ system.
 
 This application is the user-facing mobile client. It communicates with:
@@ -356,3 +358,4 @@ System-level documentation lives in Confluence:
 
 If this README and Confluence ever disagree, Confluence is the source of truth and this file should be updated.
 
+```
