@@ -105,3 +105,19 @@ If this file and Confluence ever disagree, Confluence is the source of truth and
   - Implement UI and HTTP calls here.
   - Add or update tests before making deeper changes.
 
+## 7. UX Contract (E2E-XS v1 – Mobile App)
+
+- Use a bottom tab bar as the primary navigation surface (Home, Live/Sessions, History, Profile).
+- Each tab screen should render:
+  - a top bar with title and optional actions (filters, settings)
+  - content that feels native and touch-friendly (cards, lists, large tap targets).
+- Prefer bottom sheets as the main rich-modal pattern instead of full-screen dialogs when possible.
+- Use snackbars for transient feedback (success/error) and reserve full-screen or “blocking” modals for critical decisions.
+- Keep interactions responsive:
+  - pull-to-refresh on lists
+  - simple slide/fade transitions between screens
+  - visual press feedback on buttons/cards.
+- Reuse shared tokens for colors, spacing, and typography so mobile and web feel like the same product family.
+- Reserve space in the main nav or profile area for:
+  - account settings
+  - AI assistant entry point (bottom sheet chat helper).
