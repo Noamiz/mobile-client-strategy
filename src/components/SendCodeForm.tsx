@@ -15,6 +15,8 @@ export function SendCodeForm({ onSuccess }: Props) {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 
+  // TODO: unify error handling so key auth failures can also trigger snackbars
+  // for consistent feedback across the mobile experience.
   const handleSubmit = async () => {
     const normalizedEmail = email.trim().toLowerCase();
 
@@ -78,7 +80,7 @@ export function SendCodeForm({ onSuccess }: Props) {
         disabled={loading}
       >
         {loading ? (
-          <ActivityIndicator color="#ffffff" />
+          <ActivityIndicator color={theme.colors.surface} />
         ) : (
           <Text style={styles.buttonLabel}>Send Code</Text>
         )}

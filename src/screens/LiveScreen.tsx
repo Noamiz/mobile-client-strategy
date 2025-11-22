@@ -75,7 +75,7 @@ function createStyles(theme: ReturnType<typeof useTheme>) {
       backgroundColor: theme.colors.accent,
     },
     placeholderCtaText: {
-      color: '#fff',
+      color: theme.colors.surface,
       fontWeight: '600',
     },
   });

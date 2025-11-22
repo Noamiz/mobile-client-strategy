@@ -1,3 +1,5 @@
+// E2E-XS v1: mobile AI assistant stub in a bottom sheet. Local echo only today
+// but ready for a real backend once available.
 import { Ionicons } from '@expo/vector-icons';
 import { useMemo, useState } from 'react';
 import {
@@ -97,7 +99,7 @@ export function MobileAiAssistantSheet({ visible, onClose }: Props) {
               { opacity: pressed || !draft.trim() ? 0.8 : 1 },
             ]}
           >
-            <Ionicons name="send" size={20} color="#ffffff" />
+            <Ionicons name="send" size={20} color={theme.colors.surface} />
           </Pressable>
         </View>
       </KeyboardAvoidingView>

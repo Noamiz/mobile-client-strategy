@@ -80,7 +80,7 @@ export function HomeScreen() {
           accessibilityRole="button"
           accessibilityLabel="Open AI Assistant"
         >
-          <Ionicons name="sparkles" size={20} color="#ffffff" />
+          <Ionicons name="sparkles" size={20} color={theme.colors.surface} />
           <Text style={styles.fabLabel}>Ask AI</Text>
         </Pressable>
       </View>
@@ -206,7 +206,7 @@ function createStyles(theme: ReturnType<typeof useTheme>) {
       opacity: 0.85,
     },
     fabLabel: {
-      color: '#ffffff',
+      color: theme.colors.surface,
       fontSize: 16,
       fontWeight: '600',
       marginLeft: theme.spacing.xs,

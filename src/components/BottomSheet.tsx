@@ -1,3 +1,5 @@
+// E2E-XS v1: shared bottom sheet primitive used for filters, the AI assistant,
+// and other mobile-rich modals.
 import type { PropsWithChildren } from 'react';
 import {
   Animated,
@@ -11,6 +13,8 @@ import {
 import { useEffect, useMemo, useState } from 'react';
 
 import { useTheme } from '../theme';
+
+// TODO (UX polish): consider adding drag-to-dismiss gestures to match modern mobile sheets.
 
 type BottomSheetProps = PropsWithChildren<{
   visible: boolean;

@@ -68,8 +68,9 @@ This flow mirrors the backend behavior defined in `server-strategy` and Confluen
 - **Root navigation** – `src/navigation/RootNavigator.tsx` switches between the auth stack and `MainTabs`.
 - **Bottom tab bar** – Home, Live, History, and Profile tabs styled with tokens, each rendering a top bar per the UX contract.
 - **Bottom sheet primitives** – `BottomSheet` component plus `MobileAiAssistantSheet` stub that uses it.
+  - Currently supports tap-to-dismiss; drag gestures are planned as follow-up polish.
 - **Feedback** – `SnackbarProvider` for transient feedback, used in the auth flow (code sent + success) and available app-wide.
-- **AI entry points** – Floating action button on Home and a Profile shortcut both launch the assistant sheet stub.
+- **AI entry points** – Floating action button on Home and a Profile shortcut both launch the assistant sheet stub (local echo only until the backend arrives).
 - **Auth integration** – Existing OTP flow now lives inside the auth stack while successful verification transitions to the tabbed shell.
 
 ---

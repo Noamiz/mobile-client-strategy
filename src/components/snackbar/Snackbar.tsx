@@ -112,7 +112,7 @@ function createStyles(theme: ReturnType<typeof useTheme>) {
       ...theme.elevation.raised,
     },
     message: {
-      color: '#ffffff',
+      color: theme.colors.surface,
       fontSize: theme.typography.label.fontSize,
       fontWeight: theme.typography.label.fontWeight,
     },

@@ -122,4 +122,4 @@ If this file and Confluence ever disagree, Confluence is the source of truth and
   - account settings
   - AI assistant entry point (bottom sheet chat helper).
 
-> **Implementation status (Nov 2025):** `RootNavigator` now renders a MainTabs navigator (Home, Live, History, Profile) with per-screen top bars, shared theme tokens, the reusable `BottomSheet`, snackbar feedback, and multiple entry points into the `MobileAiAssistantSheet` stub, satisfying the E2E-XS mobile shell requirements.
+> **Implementation status (Nov 2025):** `RootNavigator` now renders a MainTabs navigator (Home, Live, History, Profile) with per-screen top bars, shared theme tokens, the reusable `BottomSheet`, snackbar feedback, and multiple entry points into the `MobileAiAssistantSheet` stub. The current sheet implementation supports tap-to-dismiss today, with drag gestures tracked as a future UX polish item, and the AI assistant runs as a local echo stub until the backend is available.

@@ -18,6 +18,8 @@ export function VerifyCodeForm({ onSuccess, initialEmail = '' }: Props) {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 
+  // TODO: unify error handling so key verification failures can optionally surface
+  // a snackbar alongside inline messaging for clearer feedback.
   const handleSubmit = async () => {
     if (!email.trim()) {
       setErrorMessage('Enter the email address that received the code.');
@@ -92,7 +94,7 @@ export function VerifyCodeForm({ onSuccess, initialEmail = '' }: Props) {
         disabled={loading}
       >
         {loading ? (
-          <ActivityIndicator color="#ffffff" />
+          <ActivityIndicator color={theme.colors.surface} />
         ) : (
           <Text style={styles.buttonLabel}>Verify & Continue</Text>
         )}
