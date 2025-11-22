@@ -1,28 +1,30 @@
-import { useState } from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import { useMemo, useState } from 'react';
+import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import type { ErrorCode, User } from 'common-strategy';
 
 import { verifyCode } from '../api/authClient';
+import { useTheme } from '../theme';
 
 type Props = {
   onSuccess: (user: User) => void;
+  initialEmail?: string;
 };
 
-export function VerifyCodeForm({ onSuccess }: Props) {
-  const [email, setEmail] = useState('');
+export function VerifyCodeForm({ onSuccess, initialEmail = '' }: Props) {
+  const [email, setEmail] = useState(initialEmail);
   const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const theme = useTheme();
+  const styles = useMemo(() => createStyles(theme), [theme]);
 
   const handleSubmit = async () => {
-    if (!email.trim() || !code.trim()) {
+    if (!email.trim()) {
+      setErrorMessage('Enter the email address that received the code.');
+      return;
+    }
+
+    if (!code.trim()) {
       setErrorMessage('Enter both your email and the 6-digit code.');
       return;
     }
@@ -82,7 +84,11 @@ export function VerifyCodeForm({ onSuccess }: Props) {
       <Pressable
         accessibilityRole="button"
         onPress={handleSubmit}
-        style={[styles.button, loading ? styles.buttonDisabled : null]}
+        style={({ pressed }) => [
+          styles.button,
+          loading ? styles.buttonDisabled : null,
+          pressed ? styles.buttonPressed : null,
+        ]}
         disabled={loading}
       >
         {loading ? (
@@ -108,43 +114,53 @@ function getErrorMessage(code: ErrorCode, fallback: string) {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    gap: 12,
-    width: '100%',
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1f1f1f',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#d0d5dd',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 14,
-    fontSize: 16,
-  },
-  errorText: {
-    color: '#b42318',
-    fontSize: 14,
-  },
-  button: {
-    marginTop: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#2563eb',
-    paddingVertical: 14,
-    borderRadius: 8,
-  },
-  buttonDisabled: {
-    opacity: 0.6,
-  },
-  buttonLabel: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-});
+function createStyles(theme: ReturnType<typeof useTheme>) {
+  return StyleSheet.create({
+    container: {
+      width: '100%',
+    },
+    label: {
+      fontSize: theme.typography.label.fontSize,
+      fontWeight: theme.typography.label.fontWeight,
+      color: theme.colors.textPrimary,
+      marginBottom: theme.spacing.xs,
+      marginTop: theme.spacing.sm,
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      borderRadius: theme.radius.md,
+      paddingHorizontal: theme.spacing.md,
+      paddingVertical: theme.spacing.sm + 2,
+      fontSize: theme.typography.body.fontSize,
+      color: theme.colors.textPrimary,
+      backgroundColor: theme.colors.surface,
+    },
+    errorText: {
+      marginTop: theme.spacing.xs,
+      color: theme.colors.error,
+      fontSize: theme.typography.caption.fontSize,
+    },
+    button: {
+      marginTop: theme.spacing.lg,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: theme.colors.accent,
+      paddingVertical: theme.spacing.md,
+      borderRadius: theme.radius.md,
+      ...theme.elevation.raised,
+    },
+    buttonDisabled: {
+      opacity: 0.6,
+    },
+    buttonPressed: {
+      opacity: 0.85,
+    },
+    buttonLabel: {
+      color: '#ffffff',
+      fontSize: theme.typography.label.fontSize,
+      fontWeight: theme.typography.label.fontWeight,
+    },
+  });
+}
 

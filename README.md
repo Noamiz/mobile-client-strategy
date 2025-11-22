@@ -26,7 +26,9 @@ This application is the user-facing mobile client. It communicates with:
 ## Architecture
 
 - Framework: React Native + Expo + TypeScript
-- Navigation: (initially simple view state; React Navigation can be added later)
+- Navigation: React Navigation (native stack for auth + bottom tabs for the main shell)
+- Shared theme/tokens: `src/theme` (colors, spacing, typography, elevation) applied across screens/components
+- Surface primitives: reusable `BottomSheet`, `Snackbar` provider, and AI assistant sheet built on top of the tokens
 - Tests: Jest + React Native Testing Library
 - Shared types: `common-strategy`
 - Backend: `server-strategy` (`/auth` endpoints, later more)
@@ -59,6 +61,16 @@ Screens:
      - For too many attempts → show a throttling message.
 
 This flow mirrors the backend behavior defined in `server-strategy` and Confluence (`5.1 – Authentication`).
+
+### E2E-XS v1 mobile shell
+
+- **Theme tokens** – light theme defined in `src/theme` for colors, spacing, radii, typography, and elevations.
+- **Root navigation** – `src/navigation/RootNavigator.tsx` switches between the auth stack and `MainTabs`.
+- **Bottom tab bar** – Home, Live, History, and Profile tabs styled with tokens, each rendering a top bar per the UX contract.
+- **Bottom sheet primitives** – `BottomSheet` component plus `MobileAiAssistantSheet` stub that uses it.
+- **Feedback** – `SnackbarProvider` for transient feedback, used in the auth flow (code sent + success) and available app-wide.
+- **AI entry points** – Floating action button on Home and a Profile shortcut both launch the assistant sheet stub.
+- **Auth integration** – Existing OTP flow now lives inside the auth stack while successful verification transitions to the tabbed shell.
 
 ---
 
@@ -159,27 +171,35 @@ mobile-client-strategy/
 
     components/
 
-      SendCodeForm.tsx     # Email input + send-code button
+      BottomSheet.tsx
 
-      VerifyCodeForm.tsx   # Email + code inputs + verify button
+      ai/MobileAiAssistantSheet.tsx
 
-    screens/
+      layout/AppHeader.tsx, layout/IconButton.tsx
 
-      SendCodeScreen.tsx   # Uses SendCodeForm
+      snackbar/…           # Snackbar + provider
 
-      VerifyCodeScreen.tsx # Uses VerifyCodeForm
-
-      LoggedInScreen.tsx   # Simple “You are logged in” screen
+      SendCodeForm.tsx / VerifyCodeForm.tsx
 
     hooks/
 
-      useAuth.ts           # Tiny hook to manage auth state in-memory
+      useAuth.ts           # Auth provider/context
 
-    App.tsx                # View-state or navigation between auth and logged-in screens
+    navigation/
+
+      RootNavigator.tsx    # Auth stack + MainTabs
+
+    screens/
+
+      Auth screens + Home, Live, History, Profile tabs
+
+    testUtils/
+
+      renderWithProviders.tsx
 
     __tests__/
 
-      authFlow.test.tsx    # Tests for basic auth flow behavior
+      authFlow.test.tsx, aiAssistant.test.tsx
 
   app.json or app.config.ts
 
